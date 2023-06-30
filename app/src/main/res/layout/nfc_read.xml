@@ -19,6 +19,7 @@
             android:layout_height="@dimen/_60sdp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:padding="@dimen/_15sdp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_back"
@@ -52,41 +53,43 @@
         android:gravity="center"
         android:layout_marginStart="@dimen/_10sdp" />
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/imgRead"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvText"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:src="@drawable/gif_read"
-        />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imgRead"
-       android:layout_centerInParent="true"
-        android:orientation="horizontal"
-      >
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvNFCMessage"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:text="Game score"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            android:text="@string/str_reading"
-            />
-
-        <com.bhargavms.dotloader.DotLoader
-            android:id="@+id/text_dot_loader"
-            android:layout_width="match_parent"
+            android:textSize="@dimen/_25sdp" />
+        <TextView
+            android:id="@+id/num_1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:color_array="@array/dot_colors"
-            app:dot_radius="@dimen/_3sdp"
-            android:layout_gravity="bottom"
-            app:number_of_dots="4"/>
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="80dp"
+            android:text="@string/start_game_count"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_25sdp" />
+        <TextView
+            android:id="@+id/num_2"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/start_game_count"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_25sdp" />
+
+
+
     </LinearLayout>
+
 
 </RelativeLayout>

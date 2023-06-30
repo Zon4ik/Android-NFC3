@@ -48,5 +48,5 @@
     <string name="str_todo">TODO</string>
     <string name="str_read_with_nfc_card_t">Read with NFC Card</string>
     <string name="str_ttap_your_credit_card_on_mobile_to_read">Tap your Credit Card on mobile to read</string>
-
+    <string name="start_game_count">0</string>
 </resources>

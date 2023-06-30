@@ -22,17 +22,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bhargavms.dotloader.DotLoader;
 
 import java.io.IOException;
 
 public class NFCRead extends Activity {
 
     public static final String TAG = NFCRead.class.getSimpleName();
-    private TextView tvNFCMessage;
+    private TextView num_1;
+    private TextView num_2;
     private NfcAdapter mNfcAdapter;
-    private DotLoader dotloader;
+
     private ImageView ivBack;
+    int team_1 = 0;
+    int team_2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class NFCRead extends Activity {
     }
 
     private void initViews() {
-        tvNFCMessage = findViewById(R.id.tvNFCMessage);
-        dotloader = findViewById(R.id.text_dot_loader);
+        this.num_1 = findViewById(R.id.num_1);
+        this.num_2 = findViewById(R.id.num_2);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         ivBack = findViewById(R.id.ivBack);
     }
@@ -161,10 +163,6 @@ public class NFCRead extends Activity {
                 NdefMessage ndefMessage = ndef.getNdefMessage();
 
                 if (ndefMessage != null) {
-                    /*String message = new String(ndefMessage.getRecords()[0].getPayload());
-                    Log.d(TAG, "NFC found.. "+"readFromNFC: "+message );
-                    tvNFCMessage.setText(message);*/
-
                     Parcelable[] messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 
                     if (messages != null) {
@@ -176,10 +174,80 @@ public class NFCRead extends Activity {
 
                         byte[] payload = record.getPayload();
                         String text = new String(payload);
-                        tvNFCMessage.setText(text);
-                        dotloader.setVisibility(View.GONE);
-                        Log.e("tag", "vahid  -->  " + text);
+
+                        //GAME START
+                        if (text.equals("1")) {
+                            team_1++;
+                            String str_num_1 = Integer.toString(team_1);
+                            String str_num_2 = Integer.toString(team_2);
+                            num_1.setText(str_num_1);
+                            // matchball
+                            if(team_1 == 3 & team_2 != 2 & team_2 != 3) {
+                                team_1 = 0;
+                                team_2 = 0;
+
+                                str_num_1 = Integer.toString(team_1);
+                                str_num_2 = Integer.toString(team_2);
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Команда 1 победила", Toast.LENGTH_SHORT);
+                                toast.show();
+
+                                num_1.setText(str_num_1);
+                                num_2.setText(str_num_2);
+                            }
+                            // Meaning for stop game
+                            if(team_1 >=3 & team_1 - team_2 == 2){
+                                team_1 = 0;
+                                team_2 = 0;
+                                str_num_1 = Integer.toString(team_1);
+                                str_num_2 = Integer.toString(team_2);
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Команда 1 победила", Toast.LENGTH_SHORT);
+                                toast.show();
+                                num_1.setText(str_num_1);
+                                num_2.setText(str_num_2);
+
+                            }
+
+
+                        }
+
+                        // Meaning for score second team
+                        if (text.equals("2")) {
+                            team_2++;
+                            String str_num_2 = Integer.toString(team_2);
+                            String str_num_1 = Integer.toString(team_1);
+
+                            num_2.setText(str_num_2);
+                            if (team_2 == 3 & team_1 != 2 & team_1 != 3) {
+                                team_1 = 0;
+                                team_2 = 0;
+                                str_num_1 = Integer.toString(team_1);
+                                str_num_2 = Integer.toString(team_2);
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Команда 2 победила", Toast.LENGTH_SHORT);
+                                toast.show();
+                                num_1.setText(str_num_1);
+                                num_2.setText(str_num_2);
+                            }
+                            if(team_2 >= 3 & team_2 - team_1 == 2) {
+                                team_1 = 0;
+                                team_2 = 0;
+                                str_num_1 = Integer.toString(team_1);
+                                str_num_2 = Integer.toString(team_2);
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Команда 2 победила", Toast.LENGTH_SHORT);
+                                toast.show();
+                                num_1.setText(str_num_1);
+                                num_2.setText(str_num_2);
+                            }
+                        }
+                        Log.e("tag", "vahid  -->" + text);
+
                         ndef.close();
+
+
+
 
                     }
 
@@ -197,7 +265,9 @@ public class NFCRead extends Activity {
                         if (ndefMessage != null) {
                             String message = new String(ndefMessage.getRecords()[0].getPayload());
                             Log.d(TAG, "NFC found.. " + "readFromNFC: " + message);
-                            tvNFCMessage.setText(message);
+//                            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                            //This message dont work in our case
+                            num_1.setText(message);
                             ndef.close();
                         } else {
                             Toast.makeText(this, "Not able to read from NFC, Please try again...", Toast.LENGTH_LONG).show();
@@ -213,6 +283,10 @@ public class NFCRead extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
+
 
     }
 }
